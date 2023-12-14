@@ -1,4 +1,3 @@
-import * as XLSX from "xlsx";
 import B2 from "backblaze-b2";
 
 async function upload(
@@ -12,7 +11,6 @@ async function upload(
 
   try {
     const { data: authData } = await b2.authorize();
-    const uploadUrl = await b2.getUploadUrl({ bucketId });
 
     const { data: uploadData } = await b2.getUploadUrl({
       bucketId: bucketId,
