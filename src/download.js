@@ -1,14 +1,17 @@
-import B2 from "backblaze-b2";
 import * as XLSX from "xlsx";
-import fs from "fs";
+import B2 from "backblaze-b2";
 
-async function download(applicationKeyId, applicationKey, fileId) {
-  const b2 = new B2({ applicationKeyId, applicationKey });
+/* replace these constants */
+const applicationKeyId = "YOUR_BACKBLAZE_KEY_ID";
+const applicationKey = "YOUR_BACKBLAZE_APP_KEY";
+const fileId = "file_ID";
 
+async function download() {
   try {
+    const b2 = new B2({ applicationKeyId, applicationKey });
     await b2.authorize();
 
-    // download file by fileId
+    // Download file by fileId
     const { data: streamData } = await b2.downloadFileById({
       fileId: fileId,
       responseType: "stream",
@@ -27,20 +30,17 @@ async function download(applicationKeyId, applicationKey, fileId) {
       /* concatenate */
       const buf = Buffer.concat(bufs);
       /* AT THIS POINT, `buf` is a NodeJS Buffer */
-
       /* parse */
-      var wb = XLSX.read(Buffer.concat(bufs));
+      var wb = XLSX.read(buf, { type: "buffer" });
 
       /* generate CSV from first worksheet */
       var first_ws = wb.Sheets[wb.SheetNames[0]];
       var csv = XLSX.utils.sheet_to_csv(first_ws);
       console.log(csv);
-
-      // Optionally, save the CSV to a file
-      fs.writeFileSync("./download-output.csv", csv, { encoding: "utf8" });
     });
   } catch (err) {
-    console.error("Error downloading file:", err);
+    console.error("Error reading file:", err);
   }
 }
-export default download;
+
+download();
