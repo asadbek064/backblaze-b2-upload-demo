@@ -1,7 +1,7 @@
 import * as XLSX from "xlsx";
 import B2 from "backblaze-b2";
 
-async function uploadFile(
+async function upload(
   applicationKeyId,
   applicationKey,
   bucketId,
@@ -11,21 +11,28 @@ async function uploadFile(
   const b2 = new B2({ applicationKeyId, applicationKey });
 
   try {
-    await b2.authorize();
+    const { data: authData } = await b2.authorize();
     const uploadUrl = await b2.getUploadUrl({ bucketId });
 
-    const uploadInfo = await b2.uploadFile({
-      uploadUrl: uploadUrl.data.uploadUrl,
-      uploadAuthToken: uploadUrl.data.authorizationToken,
-      fileName,
-      data: fileContents,
-      contentLength: fileContents.length,
+    const { data: uploadData } = await b2.getUploadUrl({
+      bucketId: bucketId,
     });
 
-    console.log("File uploaded:", uploadInfo.data.fileName);
+    const { data: uploadedFile } = await b2.uploadFile({
+      uploadUrl: uploadData.uploadUrl,
+      uploadAuthToken: uploadData.authorizationToken,
+      data: fileContents,
+      fileName,
+    });
+
+    // Construct friendly URL to file
+    const bucketName = authData.allowed.bucketName;
+    const downloadURL = authData.downloadUrl;
+    const url = `${downloadURL}/file/${bucketName}/${uploadedFile.fileName}`;
+    console.log("File uploaded:", uploadedFile.fileName, url);
   } catch (err) {
     console.error("Error uploading file:", err);
   }
 }
 
-module.exports = uploadFile;
+export default upload;

@@ -5,6 +5,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "backblaze-b2": "^1.7.0",
     "xlsx": "file:vendor/xlsx-0.20.1.tgz"
-  }
+  },
+  "type": "module"
 }

@@ -1,5 +1,5 @@
-import uploadFile from "./uploadFile.js";
-import downloadFile from "./downloadFile.js";
+import upload from "./upload.js";
+import download from "./download.js";
 import * as XLSX from "xlsx";
 
 const fileName = "YOU_FILE_NAME";
@@ -16,7 +16,7 @@ var wb = XLSX.read("S,h,e,e,t,J,S\n5,4,3,3,7,9,5", { type: "binary" });
 var Body = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
 
 // Trigger upload function
-uploadFile(applicationKeyId, applicationKey, bucketId, fileName, Body);
+upload(applicationKeyId, applicationKey, bucketId, fileName, Body);
 
-// Trigger download function
-downloadFile(applicationKeyId, applicationKey, fileId);
+// Trigger download function (pass valid fileId)
+download(applicationKeyId, applicationKey, fileId);

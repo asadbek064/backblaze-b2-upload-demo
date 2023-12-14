@@ -2,7 +2,7 @@ import B2 from "backblaze-b2";
 import * as XLSX from "xlsx";
 import fs from "fs";
 
-async function downloadFile(applicationKeyId, applicationKey, fileId) {
+async function download(applicationKeyId, applicationKey, fileId) {
   const b2 = new B2({ applicationKeyId, applicationKey });
 
   try {
@@ -35,10 +35,12 @@ async function downloadFile(applicationKeyId, applicationKey, fileId) {
       var first_ws = wb.Sheets[wb.SheetNames[0]];
       var csv = XLSX.utils.sheet_to_csv(first_ws);
       console.log(csv);
+
+      // Optionally, save the CSV to a file
+      fs.writeFileSync("./download-output.csv", csv, { encoding: "utf8" });
     });
   } catch (err) {
     console.error("Error downloading file:", err);
   }
 }
-
-module.exports = downloadFile;
+export default download;
