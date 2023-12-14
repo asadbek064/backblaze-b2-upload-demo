@@ -1,4 +1,4 @@
-# backblaze-b2-upload-demo
+# sheetjs-backblaze-b2-demo
 
 [Backblaze](https://www.backblaze.com/cloud-storage) (Backblaze) is a cloud storage service provider known for its reliable and cost-effective solutions.
 
