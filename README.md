@@ -1,8 +1,6 @@
 # backblaze-b2-upload-demo
 
-[Backblaze](https://www.backblaze.com/cloud-storage) (Backblaze) is a cloud services
-platform which includes traditional virtual machine support, "Serverless
-Functions" and cloud storage.
+[Backblaze](https://www.backblaze.com/cloud-storage) (Backblaze) is a cloud storage service provider known for its reliable and cost-effective solutions.
 
 [SheetJS](https://sheetjs.com) is a JavaScript library for reading and writing
 data from spreadsheets.
