@@ -3,5 +3,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "xlsx": "file:vendor/xlsx-0.20.1.tgz"
   }
 }
